@@ -68,7 +68,7 @@ const match = [{ name: '-请选择-' }, { name: '--小组赛--' }, { name: '-A�
 var Account = nebulas.Account,
     neb = new nebulas.Neb();
 neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
-var nebPay = new NebPay();
+// var nebPay = new NebPay();
 var serialNumber;
 var intervalQuery;
 var dappAddress = "n1uPwfwZPwKo9rk5KgHcinZxzpcJPCvALmJ";
@@ -131,42 +131,86 @@ export default class IndexPage extends Component {
     );
   }
 
-  _submit() {
-    var to = dappAddress;
-    var value = "0";
-    var callFunction = "save";
-    var callArgs
-    if (this.state.selectName!== '') {
-      callArgs = `["${this.state.selectName}",{"author":"DW","content":"${this.state.content}"}]`;
-    }else{
-      callArgs = `["${this.state.selectMatchNum}",{"author":"DW","content":"${this.state.content}"}]`;
-    }
-    serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
-      listener: (resp)=>this.cbPush(resp)        //设置listener, 处理交易返回信息
-    });
+//   _submit() {
+//     var to = dappAddress;
+//     var value = "0";
+//     var callFunction = "save";
+//     var callArgs
+//     if (this.state.selectName!== '') {
+//       callArgs = `["${this.state.selectName}",{"author":"DW","content":"${this.state.content}"}]`;
+//     }else{
+//       callArgs = `["${this.state.selectMatchNum}",{"author":"DW","content":"${this.state.content}"}]`;
+//     }
+//     serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
+//       listener: (resp)=>this.cbPush(resp)        //设置listener, 处理交易返回信息
+//     });
 
-    intervalQuery = setInterval(()=> {
-      this.funcIntervalQuery();
-    }, 5000);
-  }
+//     intervalQuery = setInterval(()=> {
+//       this.funcIntervalQuery();
+//     }, 5000);
+//   }
 
-  funcIntervalQuery() {
-    nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
-      .then(function (resp) {
-        console.log("tx result: " + resp)   //resp is a JSON string
-        var respObject = JSON.parse(resp)
-        if (respObject.code === 0) {
-          alert(`set ${this.state.content} succeed!`)
-          clearInterval(intervalQuery)
-        }
+//   funcIntervalQuery() {
+//     nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
+//       .then(function (resp) {
+//         console.log("tx result: " + resp)   //resp is a JSON string
+//         var respObject = JSON.parse(resp)
+//         if (respObject.code === 0) {
+//           alert(`set ${this.state.content} succeed!`)
+//           clearInterval(intervalQuery)
+//         }
+//       })
+//       .catch(function (err) {
+//         console.log(err);
+//       });
+//   }
+
+//  cbPush(resp) {
+//     console.log("response of push: " + JSON.stringify(resp))
+// }
+
+_submitRecord(){
+  var from = Account.NewAccount().getAddressString();
+
+      var value = "0";
+      var nonce = "0"
+      var gas_price = "1000000"
+      var gas_limit = "200000"
+      var callFunction = "save";
+      var callArgs;
+      if (this.state.selectName!== '') {
+              callArgs = `["${this.state.selectName}",{"author":"DW","content":"${this.state.content}"}]`;
+            }else{
+              callArgs = `["${this.state.selectMatchNum}",{"author":"DW","content":"${this.state.content}"}]`;
+            }
+      var contract = {
+          "function": callFunction,
+          "args": callArgs
+      }
+      console.log("response of push: " + callArgs)
+      neb.api.call(from,dappAddress,value,nonce,gas_price,gas_limit,contract).then((resp)=> {
+          this.cbPush(resp)
+      }).catch(function (err) {
+          //cbSearch(err)
+          console.log("error:" + err.message)
       })
-      .catch(function (err) {
-        console.log(err);
-      });
-  }
 
- cbPush(resp) {
-    console.log("response of push: " + JSON.stringify(resp))
+}
+
+cbPush(resp) {
+  var result = resp.result    ////resp is an object, resp.result is a JSON string
+  console.log("return of rpc call: " + JSON.stringify(result))
+
+  if (result !== 'null'){
+      //if result is not null, then it should be "return value" or "error message"
+      try{
+          result = JSON.parse(result)
+      }catch (err){
+          //result is the error message
+      }
+      this.forceUpdate();
+  }else{
+  }
 }
 
   _getRecord(name,num){
@@ -189,7 +233,7 @@ export default class IndexPage extends Component {
         }
         console.log("response of push: " + callArgs)
         neb.api.call(from,dappAddress,value,nonce,gas_price,gas_limit,contract).then((resp)=> {
-            this.cbSearch(resp)
+            this.cbResult(resp)
         }).catch(function (err) {
             //cbSearch(err)
             console.log("error:" + err.message)
@@ -197,23 +241,26 @@ export default class IndexPage extends Component {
 
   }
 
-  cbSearch(resp) {
+  cbResult(resp) {
     var result = resp.result    ////resp is an object, resp.result is a JSON string
     console.log("return of rpc call: " + JSON.stringify(result))
 
-    if (result === 'null'){
-       this.setState({
-         record:this.state.record.push(result.value)
-       });
-    } else{
+    if (result !== 'null'){
         //if result is not null, then it should be "return value" or "error message"
         try{
             result = JSON.parse(result)
         }catch (err){
             //result is the error message
         }
+        this.setState({
+          record:result.value
+        });
+        this.forceUpdate();
+    }else{
+      this.setState({
+        record:[]
+      });
     }
-
 }
 
   changeContent(e) {
@@ -247,15 +294,20 @@ export default class IndexPage extends Component {
             <div className="commitView">
               <div className="commit">
 
-                {this.state.record.map((item,index)=>{
-                  return <span>{item}</span>
+                {this.state.record.length>0 && this.state.record.map((item,index)=>{
+                  return (
+                  <div key={index} >
+                    <span>{item.author}</span>
+                    <span>:</span>
+                    <span>{item.content}</span>
+                  </div>)
                 })}
 
               </div>
               <div className="add_banner">
                 <input type="text" id="add_value" ref="myTextInput" placeholder="input contents for your keyword" onChange={(e) => this.changeContent(e)} />
 
-                <button id="push" onClick={() => this._submit()}>submit</button>
+                <button id="push" onClick={() => this._submitRecord()}>submit</button>
               </div>
             </div>
 
