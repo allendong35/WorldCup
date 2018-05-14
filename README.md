@@ -1,6 +1,6 @@
 # reactProject
 
-## 搭建完整react+webpack+redux+saga框架
+## 搭建完整react+webpack框架
 
 #### 环境
     · node
@@ -8,20 +8,17 @@
 
 ## 测试
 #### 启动webpack
-热更新html和css文件
+热更文件
+npm start =>
 ````
-npm start
+测试地址：127.0.0.1:2000/worldCup
+
+选择相关球队或者比赛==>输入昵称留言===>刷新留言内容
+
+## 打包
+npm build 
 ````
+于目录dist下启动文件
 
-## 打包(暂未开放)
 
-````
-npm build
-````
-
-## 文件格式
-
-src/container下以业务分文件夹
-
-main文件夹下建立index统一集成react+redux+saga
 

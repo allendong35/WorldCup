@@ -11,6 +11,7 @@
   }
   .subTitle{
     align-self: center;
+    font-size:36px;
   }
   .selectDiv{
     display: flex;
@@ -18,10 +19,20 @@
     align-self: center;
     flex-direction: row;
     .country{
+      font-size: 20px;
     }
     .select{
       width:100px;
+      margin-right: 50px;
     }
+  }
+  .cotuntryFlag{
+    border-color: #111;
+    border-width: 10px;
+    margin-bottom: 20px;
+  }
+  .option {
+    font-size: 20px;
   }
   .content{
     display: flex;
@@ -31,8 +42,10 @@
     .countryInfo{
       width: 100%;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      
     }
     .commitView{
       width: 100%;
@@ -49,18 +62,30 @@
         justify-content: left;
         background-color: #eee;
         height: 400px;
+        padding: 10px;
+        #commitItem{
+           font-size: 15px;
+           padding: 5px;
+          }
       }
       .add_banner{
         display: flex;
         width: 100%*2/3;
         justify-content: center;
         #add_value{
-          width: 80%;
+          width: 63%;
           height: 50px;
-          box-shadow: 3px 5px grey, 1px 1px #333;
+          font-size: 15px;
+        }
+        #smallName{
+          width: 15%;
+          height: 50px;
+          font-size: 15px;
+          text-align: center;
         }
         #push{
           flex: 1;
+          font-size: 15px;
         }
       }
     }

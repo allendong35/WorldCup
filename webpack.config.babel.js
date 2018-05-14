@@ -1,10 +1,12 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import path from 'path';
 import webpack from 'webpack';
 import glob from 'glob';
 const mainPath = path.join(__dirname, 'src/main');
 const mainFilePath = 'worldCup/*.js';
 const srcPath = path.join(__dirname,'src');
+const distPath = path.join(__dirname, 'dist');
 import HappyPack from 'happypack';
 
 function getHtmlPlugins() {
@@ -113,16 +115,18 @@ const loaders = {
 loaders.html = 'html-loader';
 const cssLoader = 'css-loader!postcss-loader';
 
-const stylesheetLoaders = {
-  css: cssLoader,
-  'scss|sass': [cssLoader, 'sass-loader?outputStyle=expanded']
-};
+// const stylesheetLoaders = {
+//   css: cssLoader,
+//   'scss|sass': [cssLoader, 'sass-loader?outputStyle=expanded']
+// };
+
 
 module.exports = {
 
   entry:getEntry(),//已多次提及的唯一入口文件
   output: {
-    path: __dirname + "/public",//打包后的文件存放的地方,用webpack-p执行
+    path: distPath,
+    // path: __dirname + "/public",//打包后的文件存放的地方,用webpack-p执行
     filename: `[name].js`,//打包后输出文件的文件名
     publicPath:'/',//是webpack-dev-server的路径
     sourceMapFilename: '[file].map',
@@ -154,18 +158,20 @@ module.exports = {
                     // presets: ['es2015','react',"stage-0"]
                 }
             },
-          { test: /\.css$/, loader: "style-loader!css-loader",  exclude: /node_modules/},
-          { test: /\.scss$/, loader: "style-loader!css-loader!sass-loader", exclude: /node_modules/},
-          { test:/\.(png|gif|jpg|jpeg|bmp)$/i, loader:'url-loader?limit=5000' },  // 限制大小5kb
-          { test:/\.(woff|woff2|svg|ttf|eot)($|\?)/i, loader:'url-loader?limit=5000'} // 限制大小小于5k
-      
+          //   {
+          //     test: /\.scss$/, 
+          //     loader: 'style-loader!css-loader'
+          // },
+          // { test: /\.css$/, loader: "style-loader!css-loader",  exclude: /node_modules/},
+          { test: /\.scss$/, loader: "style-loader!css-loader!sass-loader?outputStyle=expanded", exclude: /node_modules/},
+          { test:/\.(png|gif|jpg|jpeg|bmp)$/i, loader:'file-loader?name=images/[hash:8].[name].[ext]' },  // 限制大小5kb
         ]
     },
   devtool: 'cheap-module-source-map',//7种SourceMap模式
   plugins,
   devServer:{//webpack-dev-server他将打包后的存在内存中，并没有在工作区生成一个文件。打包文件用，用webpack -p 命令。
     disableHostCheck: true,
-    contentBase: 'src/main',
+    contentBase: distPath,
     publicPath:'/',
     historyApiFallback: true,
     port:2000,
