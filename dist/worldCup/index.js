@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ea1baac77eaf64cac25f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e5019eef894f62f96079"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -716,7 +716,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/";
+/******/ 	__webpack_require__.p = "../";
 /******/
 /******/ 	// __webpack_hash__
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
@@ -22904,7 +22904,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".mod-profitList {\n  display: flex;\n  flex-direction: column;\n}\n\n.mod-profitList .head {\n  transition: padding 0.5s cubic-bezier(0.42, 0, 0.33, 1.24) 0s;\n  height: 396px;\n  width: 100%;\n  background: url(" + escape(__webpack_require__("./src/container/worldCup/img/worldCup.jpeg")) + ") no-repeat center center;\n}\n\n.mod-profitList .subTitle {\n  align-self: center;\n  font-size: 36px;\n}\n\n.mod-profitList .selectDiv {\n  display: flex;\n  align-items: center;\n  align-self: center;\n  flex-direction: row;\n}\n\n.mod-profitList .selectDiv .country {\n  font-size: 20px;\n}\n\n.mod-profitList .selectDiv .select {\n  width: 100px;\n  margin-right: 50px;\n}\n\n.mod-profitList .cotuntryFlag {\n  border-color: #111;\n  border-width: 10px;\n  margin-bottom: 20px;\n}\n\n.mod-profitList .option {\n  font-size: 20px;\n}\n\n.mod-profitList .content {\n  display: flex;\n  justify-content: space-between;\n  height: 500px;\n  width: 100%;\n}\n\n.mod-profitList .content .countryInfo {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n\n.mod-profitList .content .commitView {\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-direction: column;\n}\n\n.mod-profitList .content .commitView .commit {\n  display: flex;\n  flex-direction: column;\n  overflow-x: hidden;\n  overflow-y: scroll;\n  width: 66.66667%;\n  justify-content: left;\n  background-color: #eee;\n  height: 400px;\n  padding: 10px;\n}\n\n.mod-profitList .content .commitView .commit #commitItem {\n  font-size: 15px;\n  padding: 5px;\n}\n\n.mod-profitList .content .commitView .add_banner {\n  display: flex;\n  width: 66.66667%;\n  justify-content: center;\n}\n\n.mod-profitList .content .commitView .add_banner #add_value {\n  width: 63%;\n  height: 50px;\n  font-size: 15px;\n}\n\n.mod-profitList .content .commitView .add_banner #smallName {\n  width: 15%;\n  height: 50px;\n  font-size: 15px;\n  text-align: center;\n}\n\n.mod-profitList .content .commitView .add_banner #push {\n  flex: 1;\n  font-size: 15px;\n}\n", ""]);
+exports.push([module.i, ".mod-profitList {\n  display: flex;\n  flex-direction: column;\n}\n\n.mod-profitList .head {\n  transition: padding 0.5s cubic-bezier(0.42, 0, 0.33, 1.24) 0s;\n  height: 396px;\n  width: 100%;\n  background: url(" + escape(__webpack_require__("./src/container/worldCup/img/worldCup.jpeg")) + ") no-repeat center center;\n}\n\n.mod-profitList .subTitle {\n  align-self: center;\n  font-size: 36px;\n}\n\n.mod-profitList .selectDiv {\n  display: flex;\n  align-items: center;\n  align-self: center;\n  flex-direction: row;\n}\n\n.mod-profitList .selectDiv .country {\n  font-size: 20px;\n}\n\n.mod-profitList .selectDiv .select {\n  width: 100px;\n  margin-right: 50px;\n}\n\n.mod-profitList .cotuntryFlag {\n  margin-bottom: 20px;\n}\n\n.mod-profitList .option {\n  font-size: 20px;\n}\n\n.mod-profitList .content {\n  display: flex;\n  justify-content: space-between;\n  height: 500px;\n  width: 100%;\n}\n\n.mod-profitList .content .countryInfo {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n\n.mod-profitList .content .commitView {\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-direction: column;\n}\n\n.mod-profitList .content .commitView .commit {\n  display: flex;\n  flex-direction: column;\n  overflow-x: hidden;\n  overflow-y: scroll;\n  width: 66.66667%;\n  justify-content: left;\n  background-color: #eee;\n  height: 400px;\n  padding: 10px;\n}\n\n.mod-profitList .content .commitView .commit #commitItem {\n  font-size: 15px;\n  padding: 5px;\n}\n\n.mod-profitList .content .commitView .add_banner {\n  display: flex;\n  width: 66.66667%;\n  justify-content: center;\n}\n\n.mod-profitList .content .commitView .add_banner #add_value {\n  width: 63%;\n  height: 50px;\n  font-size: 15px;\n}\n\n.mod-profitList .content .commitView .add_banner #smallName {\n  width: 15%;\n  height: 50px;\n  font-size: 15px;\n  text-align: center;\n}\n\n.mod-profitList .content .commitView .add_banner #push {\n  flex: 1;\n  font-size: 15px;\n}\n", ""]);
 
 // exports
 
@@ -86580,7 +86580,8 @@ var nebPay = new _nebpay2.default();
 var serialNumber;
 var intervalQuery;
 var dappAddress = "n1zFEMTvKd44aJAy1xxH2myT6bD5T3G4Sc2";
-// 1a9e21b735bfaefa63edf95fe96e7c971278cdd45ca6aa933539347df5a4a0b7
+// 2104187c3c6883bdb06489e041dc4037735daf15f98a720cc01b84fd384ce085
+// 86e7fde1d3f637983571740d51fb89c951e2b8b48aa4881e59db4096ac7c047f
 var IndexPage = (_temp = _class = function (_Component) {
   _inherits(IndexPage, _Component);
 
@@ -86673,6 +86674,11 @@ var IndexPage = (_temp = _class = function (_Component) {
 
   IndexPage.prototype._submit = function _submit() {
     var _this3 = this;
+
+    if (typeof webExtensionWallet === "undefined") {
+      alert("Extension wallet is not installed, please install it first");
+      return;
+    }
 
     var to = dappAddress;
     var value = "0";
@@ -86812,7 +86818,7 @@ var IndexPage = (_temp = _class = function (_Component) {
         this.state.selectName !== '' && _react2.default.createElement(
           'div',
           { className: 'countryInfo' },
-          _conntriesFlag.flag[this.state.selectName] && _react2.default.createElement('img', { className: 'cotuntryFlag', src: _conntriesFlag.flag[this.state.selectName], alt: '' }),
+          _conntriesFlag.flag[this.state.selectName] && _react2.default.createElement('img', { border: '1', className: 'cotuntryFlag', src: _conntriesFlag.flag[this.state.selectName], alt: '' }),
           _react2.default.createElement(
             'span',
             { className: 'subTitle' },
@@ -86834,7 +86840,7 @@ var IndexPage = (_temp = _class = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'commit' },
-            this.state.record.length > 0 && this.state.record.map(function (item, index) {
+            this.state.record && this.state.record.map(function (item, index) {
               return _react2.default.createElement(
                 'div',
                 { key: index },

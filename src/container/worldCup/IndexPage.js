@@ -16,7 +16,8 @@ var nebPay = new NebPay();
 var serialNumber;
 var intervalQuery;
 var dappAddress = "n1zFEMTvKd44aJAy1xxH2myT6bD5T3G4Sc2";
-// 1a9e21b735bfaefa63edf95fe96e7c971278cdd45ca6aa933539347df5a4a0b7
+// 2104187c3c6883bdb06489e041dc4037735daf15f98a720cc01b84fd384ce085
+// 86e7fde1d3f637983571740d51fb89c951e2b8b48aa4881e59db4096ac7c047f
 export default class IndexPage extends Component {
   static displayName = 'worldCup';
   static propTypes = {
@@ -78,6 +79,11 @@ export default class IndexPage extends Component {
 
 
   _submit() {
+    if (typeof(webExtensionWallet) === "undefined") {
+      alert("Extension wallet is not installed, please install it first");
+      return;
+    }
+
     var to = dappAddress;
     var value = "0";
     var callFunction = "save";
@@ -206,7 +212,7 @@ export default class IndexPage extends Component {
               <div className="countryInfo">
 
                 {flag[this.state.selectName] &&
-                  <img className="cotuntryFlag" src={flag[this.state.selectName]} alt="" />
+                  <img border="1" className="cotuntryFlag" src={flag[this.state.selectName]} alt="" />
                 }
                 <span className='subTitle'>{this.state.selectName}</span>
               </div>
@@ -220,7 +226,7 @@ export default class IndexPage extends Component {
 
             <div className="commitView">
               <div className="commit">
-                {this.state.record.length > 0 && this.state.record.map((item, index) => {
+                {this.state.record && this.state.record.map((item, index) => {
                   return (
                     <div key={index}>
                       <span id="commitItem">{item.author}</span>

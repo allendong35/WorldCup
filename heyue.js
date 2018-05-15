@@ -30,7 +30,6 @@ var WorldCup = function() {
     });
 };
 
-// save value to contract, only after height of block, users can takeout
 WorldCup.prototype = {
     init: function() {
         //TODO:

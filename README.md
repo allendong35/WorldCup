@@ -20,5 +20,7 @@ npm build
 ````
 于目录dist下启动文件
 
+index.html
+
 
 

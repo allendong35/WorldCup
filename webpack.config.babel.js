@@ -108,7 +108,7 @@ const loaders = {
     ],
     include: srcPath
   },
-  'png|jpg|jpeg|gif|svg': 'url-loader?limit=10000&name=images/[hash].[ext]',
+  'png|jpg|jpeg|gif|svg': 'url-loader?limit=10000&name=../images/[hash].[ext]',
   'woff|woff2': 'url-loader?limit=100000',
   'ttf|eot': 'file-loader'
 };
@@ -128,7 +128,7 @@ module.exports = {
     path: distPath,
     // path: __dirname + "/public",//打包后的文件存放的地方,用webpack-p执行
     filename: `[name].js`,//打包后输出文件的文件名
-    publicPath:'/',//是webpack-dev-server的路径
+    publicPath:'../',//是webpack-dev-server的路径
     sourceMapFilename: '[file].map',
     crossOriginLoading: 'anonymous',//这个选项用于跨域加载chunks,允许跨域加载，用anonymous的时候，不会在请求发送证书。
     pathinfo: false,
