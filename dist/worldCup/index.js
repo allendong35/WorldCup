@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e5019eef894f62f96079"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3a5517f544fac6a89be4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -86579,9 +86579,8 @@ neb.setRequest(new _nebulas2.default.HttpRequest("https://mainnet.nebulas.io"));
 var nebPay = new _nebpay2.default();
 var serialNumber;
 var intervalQuery;
-var dappAddress = "n1zFEMTvKd44aJAy1xxH2myT6bD5T3G4Sc2";
-// 2104187c3c6883bdb06489e041dc4037735daf15f98a720cc01b84fd384ce085
-// 86e7fde1d3f637983571740d51fb89c951e2b8b48aa4881e59db4096ac7c047f
+var dappAddress = "n1fGTaewhhrm26ysdVnr7qiMELRbwV8BVbN";
+// 62373e894b6e2737d6bbe6e5a8f191278cb73bcf80c42930d7b69488bb699fd4
 var IndexPage = (_temp = _class = function (_Component) {
   _inherits(IndexPage, _Component);
 
@@ -86609,8 +86608,16 @@ var IndexPage = (_temp = _class = function (_Component) {
     return this.___selectRender__REACT_HOT_LOADER__.apply(this, arguments);
   };
 
-  IndexPage.prototype.___selectRender__REACT_HOT_LOADER__ = function ___selectRender__REACT_HOT_LOADER__() {
+  IndexPage.prototype.componentDidMount = function componentDidMount() {
     var _this2 = this;
+
+    intervalQuery = setInterval(function () {
+      _this2.funcIntervalQuery();
+    }, 5000);
+  };
+
+  IndexPage.prototype.___selectRender__REACT_HOT_LOADER__ = function ___selectRender__REACT_HOT_LOADER__() {
+    var _this3 = this;
 
     var names = _conntriesFlag2.default.map(function (item, index) {
       return _react2.default.createElement(
@@ -86637,12 +86644,12 @@ var IndexPage = (_temp = _class = function (_Component) {
       _react2.default.createElement(
         'select',
         { className: 'select', value: this.state.selectName, onChange: function onChange(item) {
-            _this2.setState({
+            _this3.setState({
               selectName: item.target.value,
               selectMatch: "",
               selectMatchNum: 0
             });
-            _this2._getRecord(item.target.value);
+            _this3._getRecord(item.target.value);
           } },
         names
       ),
@@ -86657,12 +86664,12 @@ var IndexPage = (_temp = _class = function (_Component) {
             _matchArray2.default.map(function (item, index) {
               if (item.name === e.target.value) {
                 if (item.num) {
-                  _this2.setState({
+                  _this3.setState({
                     selectMatch: item.name,
                     selectMatchNum: item.num,
                     selectName: ""
                   });
-                  _this2._getRecord("", item.num);
+                  _this3._getRecord("", item.num);
                 }
               }
             });
@@ -86673,8 +86680,16 @@ var IndexPage = (_temp = _class = function (_Component) {
   };
 
   IndexPage.prototype._submit = function _submit() {
-    var _this3 = this;
+    var _this4 = this;
 
+    if (this.state.author === '') {
+      alert('请输入昵称');
+      return;
+    }
+    if (this.state.content === '') {
+      alert('请输入评论');
+      return;
+    }
     if (typeof webExtensionWallet === "undefined") {
       alert("Extension wallet is not installed, please install it first");
       return;
@@ -86693,34 +86708,29 @@ var IndexPage = (_temp = _class = function (_Component) {
     console.log("response of push: " + callArgs);
     serialNumber = nebPay.call(to, value, callFunction, callArgs, { //使用nebpay的call接口去调用合约,
       listener: function listener(resp) {
-        return _this3.cbPush(resp);
+        return _this4.cbPush(resp);
       } //设置listener, 处理交易返回信息
     });
-
-    intervalQuery = setInterval(function () {
-      _this3.funcIntervalQuery();
-    }, 5000);
   };
 
   IndexPage.prototype.funcIntervalQuery = function funcIntervalQuery() {
-    var _this4 = this;
+    // nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
+    //   .then((resp) => {
+    //     console.log("tx result: " + resp)   //resp is a JSON string
+    //     var respObject = JSON.parse(resp)
+    //     // if (respObject.code === 0) {
+    if (this.state.selectName !== '') {
+      this._getRecord(this.state.selectName);
+    } else {
 
-    nebPay.queryPayInfo(serialNumber) //search transaction result from server (result upload to server by app)
-    .then(function (resp) {
-      console.log("tx result: " + resp); //resp is a JSON string
-      var respObject = JSON.parse(resp);
-      if (respObject.code === 0) {
-        if (_this4.state.selectName !== '') {
-          _this4._getRecord(_this4.state.selectName);
-        } else {
-
-          _this4._getRecord("", _this4.state.num);
-        }
-        clearInterval(intervalQuery);
-      }
-    }).catch(function (err) {
-      console.log(err);
-    });
+      this._getRecord("", this.state.num);
+    }
+    // clearInterval(intervalQuery)
+    // }
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   };
 
   IndexPage.prototype.cbPush = function cbPush(resp) {

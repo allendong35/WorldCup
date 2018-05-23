@@ -15,9 +15,8 @@ neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"));
 var nebPay = new NebPay();
 var serialNumber;
 var intervalQuery;
-var dappAddress = "n1zFEMTvKd44aJAy1xxH2myT6bD5T3G4Sc2";
-// 2104187c3c6883bdb06489e041dc4037735daf15f98a720cc01b84fd384ce085
-// 86e7fde1d3f637983571740d51fb89c951e2b8b48aa4881e59db4096ac7c047f
+var dappAddress = "n1fGTaewhhrm26ysdVnr7qiMELRbwV8BVbN";
+// 62373e894b6e2737d6bbe6e5a8f191278cb73bcf80c42930d7b69488bb699fd4
 export default class IndexPage extends Component {
   static displayName = 'worldCup';
   static propTypes = {
@@ -35,6 +34,14 @@ export default class IndexPage extends Component {
       record: [],
     };
   }
+
+  componentDidMount() {
+    intervalQuery = setInterval(() => {
+      this.funcIntervalQuery();
+    }, 5000);
+  }
+
+
   _selectRender = () => {
     const names = country.map((item, index) => {
       return <option className="option" key={index}>{item}</option>;
@@ -76,9 +83,17 @@ export default class IndexPage extends Component {
     );
   }
 
-
+  
 
   _submit() {
+    if (this.state.author === '') {
+        alert('请输入昵称');
+        return;
+    }
+    if (this.state.content === '') {
+      alert('请输入评论');
+      return;
+    }
     if (typeof(webExtensionWallet) === "undefined") {
       alert("Extension wallet is not installed, please install it first");
       return;
@@ -99,29 +114,26 @@ export default class IndexPage extends Component {
       listener: (resp) => this.cbPush(resp)        //设置listener, 处理交易返回信息
     });
 
-    intervalQuery = setInterval(() => {
-      this.funcIntervalQuery();
-    }, 5000);
   }
 
   funcIntervalQuery() {
-    nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
-      .then((resp) => {
-        console.log("tx result: " + resp)   //resp is a JSON string
-        var respObject = JSON.parse(resp)
-        if (respObject.code === 0) {
+    // nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
+    //   .then((resp) => {
+    //     console.log("tx result: " + resp)   //resp is a JSON string
+    //     var respObject = JSON.parse(resp)
+    //     // if (respObject.code === 0) {
           if (this.state.selectName !== '') {
             this._getRecord(this.state.selectName);
           } else {
 
             this._getRecord("",this.state.num);
           }
-          clearInterval(intervalQuery)
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+          // clearInterval(intervalQuery)
+        // }
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // });
   }
 
   cbPush(resp) {
